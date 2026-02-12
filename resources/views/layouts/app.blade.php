@@ -34,6 +34,9 @@
     <main class="py-10">
         @yield('content')
     </main>
+     <main class="py-10">
+        @yield('mdivision')
+    </main>
 
 </body>
 </html>
