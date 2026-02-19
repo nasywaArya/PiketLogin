@@ -5,7 +5,7 @@
 @section('mdivision')
 
 <!-- ================= HEADER ================= -->
-<div class="flex justify-between items-center mb-5 ml-10">
+<div class="flex justify-between items-center mb-5 max-w-6xl mx-auto  ">
     <h1 class="text-3xl font-semibold text-black">
         Manage Divisions
     </h1>
@@ -18,14 +18,14 @@
 
 
 <!-- ================= CONTAINER ================= -->
-<div class="bg-[#b7dcd1] p-8 rounded-2xl">
-    <div class="bg-white rounded-2xl p-10 border border-gray-300">
+<div class="bg-[#b7dcd1] p-8 rounded-2xl max-w-6xl mx-auto ">
+    <div class="flex justify-center bg-white rounded-2xl p-10 border border-gray-300 max-w-6xl mx-auto ">
 
         <!-- ================= GRID CARD ================= -->
-        <div class="grid grid-cols-2 gap-10">
+        <div class="grid grid-cols-2 gap-[5rem]  ">
 
             @foreach ($divisions as $division)
-            <div class="border rounded-lg shadow-sm overflow-hidden">
+            <div class="border rounded-lg shadow-sm overflow-hidden w-[350px] ">
 
                 <!-- CARD TOP -->
                 <div class="p-5">
@@ -42,19 +42,19 @@
                 <div class="border-t"></div>
 
                 <!-- CARD BUTTON -->
-                <div class="flex justify-between p-3">
+                <div class="flex justify-between p-5">
 
-                    <button class="bg-pink-500 text-white px-3 py-1 rounded-full text-xs">
+                    <button class="bg-pink-500 text-white px-5 py-1 rounded-full text-xs">
                         Detail
                     </button>
 
                     <a href="#editModal{{ $division->id }}"
-                       class="bg-blue-500 text-white px-3 py-1 rounded-full text-xs">
+                       class="bg-blue-500 text-white px-7 py-1 rounded-full text-xs">
                         Edit
                     </a>
 
                     <a href="#deleteModal{{ $division->id }}"
-                       class="border border-red-400 text-red-500 px-3 py-1 rounded-full text-xs">
+                       class="border border-red-400 text-red-500 px-5 py-1 rounded-full text-xs">
                         Delete
                     </a>
 
