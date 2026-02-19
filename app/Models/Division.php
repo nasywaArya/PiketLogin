@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Division extends Model
@@ -10,4 +11,8 @@ class Division extends Model
         'division_name',
         'total_users'
     ];
+      public function users()
+    {
+        return $this->haseMany(User::class);
+    }
 }
