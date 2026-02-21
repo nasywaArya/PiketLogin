@@ -15,11 +15,12 @@ class User extends Authenticatable
 
   
    protected $fillable = [
-    'division_id',
-    'name',
-    'email',
-    'password',
-];
+       'division_id',
+       'name',
+       'email',
+       'password',
+       'photo'
+    ];
 public function division()
 {
     return $this->belongsTo(Division::class);

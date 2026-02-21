@@ -35,7 +35,8 @@
         @yield('content')
     </main>
      <main class="py-10">
-        @yield('mdivision')
+        <!-- @yield('mdivision') -->
+        @yield('musers')
     </main>
 
 </body>
