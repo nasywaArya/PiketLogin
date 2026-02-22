@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
  
 use App\Models\Division;
 use App\Models\User;
->>>>>>> 1fb9fc37dc9c4163de2f9a8141eae7a32fd612ca
+ 
 
 class ManageUserController extends Controller
 {
@@ -38,7 +38,7 @@ class ManageUserController extends Controller
                ->withQueryString();
         $divisions = Division::all();
         return view('admin.musers.index', compact('users', 'divisions'));
->>>>>>> 1fb9fc37dc9c4163de2f9a8141eae7a32fd612ca
+ 
     }
 
     /**
@@ -49,7 +49,7 @@ class ManageUserController extends Controller
  
         $divisions = Division::all();
        return view('manageusers.index', compact('divisions'));
->>>>>>> 1fb9fc37dc9c4163de2f9a8141eae7a32fd612ca
+ 
     }
 
     /**
@@ -84,7 +84,7 @@ class ManageUserController extends Controller
                      ->with('success', 'User berhasil ditambahkan');
 }
 
->>>>>>> 1fb9fc37dc9c4163de2f9a8141eae7a32fd612ca
+ 
     /**
      * Display the specified resource.
      */
@@ -142,6 +142,6 @@ class ManageUserController extends Controller
         $manageuser->delete();
 
         return redirect()->route('manageusers.index');
->>>>>>> 1fb9fc37dc9c4163de2f9a8141eae7a32fd612ca
+ 
     }
 }
