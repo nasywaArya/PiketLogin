@@ -52,6 +52,8 @@
                 </div>
 
                 <!-- Logout -->
+                 <form action="{{ route('logout') }}" method="POST">
+        @csrf
                 <div class="p-5 border-t border-gray-100">
                     <a href="#" class="flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-100 transition-colors w-full">
                         <span class="material-symbols-outlined">
