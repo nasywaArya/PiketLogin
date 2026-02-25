@@ -40,7 +40,7 @@ class ManageUserController extends Controller
         $divisions = Division::all();
         return view('admin.musers.index', compact('users', 'divisions'));
  
->>>>>>> origin/feature-manage-users-divisions
+
     }
 
     // FILTER DIVISION
