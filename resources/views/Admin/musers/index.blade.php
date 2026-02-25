@@ -26,12 +26,12 @@
         <!-- SEARCH -->
         <div class="relative">
             <input type="text"
-                   name="search"
-                   placeholder="Filter by name or email..."
-                   value="{{ request('search') }}"
-                   class="w-full bg-[#dcdcdc] border border-gray-400
-                          rounded-full py-4 pl-6 pr-12 text-sm
-                          focus:outline-none">
+           name="search"
+           placeholder="Filter by name or email..."
+           value="{{ request('search') }}"
+           class="w-full bg-[#dcdcdc] border border-gray-400
+                  rounded-full py-4 pl-6 pr-12 text-sm
+                  focus:outline-none">
 
             <svg xmlns="http://www.w3.org/2000/svg"
                  class="w-5 h-5 absolute right-5 top-1/2 -translate-y-1/2 text-gray-600"
@@ -95,7 +95,7 @@
                 <tbody>
                     @foreach($users as $user)
                     <tr class="border-b border-gray-400">
-                        <td class="py-4">{{ $user->id }}</td>
+                        <td class="py-4">{{ str_pad($loop->iteration, 5, '0', STR_PAD_LEFT) }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->division->division_name ?? '-' }}</td>
                         <td>{{ $user->email }}</td>
@@ -164,10 +164,11 @@
                     <!-- AUTO ID -->
                     <div>
                         <label class="block font-medium">ID</label>
-                        <input type="text"
-                               value="{{ str_pad(\App\Models\User::max('id') + 1, 5, '0', STR_PAD_LEFT) }}"
-                               disabled
-                               class="w-full p-3 rounded-xl bg-gray-200 border">
+                        
+<input type="text"
+       value="{{ str_pad($nextId, 5, '0', STR_PAD_LEFT) }}"
+       disabled
+       class="w-full p-3 rounded-xl bg-gray-200 border">
                     </div>
 
                     <!-- NAME -->
@@ -250,6 +251,12 @@
         Add User
     </button>
 
+    <a href="#"
+        class="bg-gray-400 px-6 py-2 rounded-xl
+                  font-semibold shadow w-[120px]
+                  text-center hover:bg-gray-500 transition">
+                  Cancel
+    </a>
 </div>
 
             </div>
@@ -283,7 +290,7 @@
                     <div>
                         <label class="block font-medium">ID</label>
                         <input type="text"
-                               value="{{ str_pad($user->id, 5, '0', STR_PAD_LEFT) }}"
+                               value="{{ str_pad($loop->iteration, 5, '0', STR_PAD_LEFT) }}"
                                disabled
                                class="w-full p-3 rounded-xl bg-gray-200 border">
                     </div>
