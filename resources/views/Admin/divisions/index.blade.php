@@ -33,9 +33,9 @@
                         {{ $division->division_name }}
                     </h2>
 
-                    <div class="flex justify-between text-xs text-gray-600">
-                        <span>Number of students :</span>
-                        <span>{{ $division->total_users }} Students</span>
+                    <div class="flex justify-between text-xs text-gray-600 mt-2">
+                        <span>Number of users :</span>
+                       <span>{{ $division->users->count() }} Users</span>
                     </div>
                 </div>
 
@@ -44,9 +44,11 @@
                 <!-- CARD BUTTON -->
                 <div class="flex justify-between p-5">
 
-                    <button class="bg-pink-500 text-white px-5 py-1 rounded-full text-xs">
-                        Detail
-                    </button>
+                     
+                    <a href="{{ route('divisions.show', $division->id) }}"
+                        class="bg-pink-500 text-white px-5 py-1 rounded-full text-xs">
+                    Detail
+                    </a>
 
                     <a href="#editModal{{ $division->id }}"
                        class="bg-blue-500 text-white px-7 py-1 rounded-full text-xs">

@@ -7,10 +7,22 @@ use Illuminate\Http\Request;
 
 class DivisionController extends Controller
 {
-     public function index(){
-        $divisions = Division::all();
-        return view('admin.divisions.index' , compact('divisions'));
-     }
+   public function index()
+{
+    $divisions = Division::withCount('users')->get();
+
+    return view('admin.divisions.index', compact('divisions'));
+}
+
+public function show(Division $division)
+{
+    $division->load('users');
+
+    return view('admin.divisions.detail-users',
+        compact('division'));
+}
+
+
      // MENYIMPAN DATA BARU
     public function store(Request $request)
     {

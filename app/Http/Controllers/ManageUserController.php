@@ -3,24 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+ 
 use App\Models\Division;
 use App\Models\User;
+ 
 
 class ManageUserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+ 
     public function index(Request $request)
 {
     $query = User::query();
 
-    // SEARCH
-    if ($request->search) {
-        $query->where(function ($q) use ($request) {
-            $q->where('name', 'like', "%$request->search%")
-              ->orWhere('email', 'like', "%$request->search%");
-        });
+
+        // SEARCH
+        if ($request->search) {
+            $query->where('name', 'like', "%$request->search%")
+                  ->orWhere('email', 'like', "%$request->search%");
+        }
+
+        // SORTING
+        if ($request->sort == 'az') {
+            $query->orderBy('name', 'asc');
+        } elseif ($request->sort == 'za') {
+            $query->orderBy('name', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $users = $query->with('division')
+               ->paginate(5)
+               ->withQueryString();
+        $divisions = Division::all();
+        return view('admin.musers.index', compact('users', 'divisions'));
+ 
+>>>>>>> origin/feature-manage-users-divisions
     }
 
     // FILTER DIVISION
@@ -51,14 +71,17 @@ class ManageUserController extends Controller
      */
     public function create()
     {
+ 
         $divisions = Division::all();
        return view('manageusers.index', compact('divisions'));
+ 
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
+ 
 {
     $request->validate([
         'name' => 'required',
@@ -86,6 +109,7 @@ class ManageUserController extends Controller
                      ->with('success', 'User berhasil ditambahkan');
 }
 
+ 
     /**
      * Display the specified resource.
      */
@@ -105,6 +129,7 @@ class ManageUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+ 
     public function update(Request $request, User $manageuser)
 {
     $request->validate([
@@ -142,5 +167,6 @@ class ManageUserController extends Controller
         $manageuser->delete();
 
         return redirect()->route('manageusers.index');
+ 
     }
 }
