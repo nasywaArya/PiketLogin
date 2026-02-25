@@ -12,12 +12,26 @@
         <div class="flex items-center gap-4 w-full lg:w-auto justify-center lg:justify-start">
             <div class="bg-white px-8 py-5 rounded-2xl shadow-lg border border-gray-100">
                 <h2 class="text-4xl font-bold text-[#004643] text-center lg:text-left">
-                   Divisi MA
+                    Divisi MA
                 </h2>
             </div>
         </div>
 
-       
+        <!-- Profile Button -->
+        <div class="relative w-full lg:w-auto flex justify-center lg:justify-end">
+            <button id="profileButton" class="flex items-center gap-3 bg-white px-5 py-3 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-all">
+                <div class="w-12 h-12 bg-gradient-to-br from-[#004643] to-[#00665f] rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-2xl">person</span>
+                </div>
+                <div class="text-left hidden sm:block">
+                    <p class="font-bold text-[#004643] text-lg">Budi Santoso</p>
+                    <p class="text-sm text-gray-500">Divisi MA</p>
+                </div>
+                <span class="material-symbols-outlined text-[#004643] text-2xl transition-transform duration-300" id="dropdownArrow">
+                    expand_more
+                </span>
+            </button>
+
             <!-- Dropdown Menu -->
             <div id="profileMenu" class="absolute right-0 mt-3 w-72 bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 hidden">
                 <div class="p-5 border-b border-gray-100">
@@ -145,8 +159,8 @@
                 <table class="w-full">
                     <thead class="bg-gray-50">
                         <tr class="border-b border-gray-200">
-                            <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[100px]">Tanggal</th>
-                            <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[80px]">Hari</th>
+                            <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[120px]">Tanggal</th>
+                            <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[100px]">Hari</th>
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[80px]">ID</th>
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[180px]">Akun User</th>
                             <th class="py-4 px-6 text-center font-bold text-[#004643] min-w-[250px]">Deskripsi Kegiatan</th>
@@ -217,6 +231,7 @@ tbody tr:hover {
     font-weight: 600;
     border-radius: 9999px;
     transition: all 0.2s ease;
+    cursor: pointer;
 }
 .status-badge:hover {
     transform: scale(1.05);
@@ -276,6 +291,10 @@ input:focus {
     max-width: 250px;
     white-space: normal;
     word-wrap: break-word;
+}
+
+.description-cell .flex {
+    align-items: flex-start;
 }
 
 /* Responsive Table */
@@ -472,38 +491,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
-    // ================ DAFTAR DESKRIPSI KEGIATAN ================
-    const deskripsiList = [
-        'Membersihkan papan tulis',
-        'Merapikan kursi dan meja',
-        'Menyapu lantai',
-        'Mengepel lantai',
-        'Mengelap kaca jendela',
-        'Membersihkan debu',
-        'Membuang sampah',
-        'Membersihkan toilet',
-        'Menyapu koridor',
-        'Merapikan buku di rak',
-        'Membersihkan laboratorium',
-        'Menata alat praktikum',
-        'Membersihkan perpustakaan',
-        'Menyapu halaman',
-        'Membersihkan taman',
-        'Membersihkan ruang IT',
-        'Menata kabel',
-        'Membersihkan proyektor',
-        'Membersihkan mushola',
-        'Merapikan sajadah',
-        'Membersihkan kantin',
-        'Membersihkan AC',
-        'Membersihkan selokan',
-        'Membersihkan ruang guru',
-        'Merapikan dokumen',
-        'Menyiram tanaman',
-        'Membersihkan ventilasi',
-        'Menata perlengkapan kelas'
-    ];
-
     // ================ VARIABLES ================
     let currentWeek = 1;
     let currentFilterDay = 'all';
@@ -535,15 +522,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ================ FUNGSI FILTER ================
     function getFilteredData() {
-        // 1. Filter berdasarkan minggu
+        // Filter berdasarkan minggu
         let filtered = laporanData.filter(item => item.week === currentWeek);
         
-        // 2. Filter berdasarkan hari
+        // Filter berdasarkan hari
         if (currentFilterDay !== 'all') {
             filtered = filtered.filter(item => item.hari === currentFilterDay);
         }
         
-        // 3. Filter berdasarkan search
+        // Filter berdasarkan search
         if (currentSearchTerm && currentSearchTerm.trim() !== '') {
             const term = currentSearchTerm.toLowerCase().trim();
             filtered = filtered.filter(item => 
@@ -589,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </tr>
             `;
             document.getElementById('rowCount').textContent = 'Menampilkan 0 laporan';
-            summaryInfo.textContent = '';
+            if (summaryInfo) summaryInfo.textContent = '';
             return;
         }
         
@@ -635,15 +622,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         tableBody.innerHTML = html;
         document.getElementById('rowCount').textContent = `Menampilkan ${filteredData.length} laporan piket`;
-        summaryInfo.textContent = `${selesai} Selesai | ${belum} Belum Selesai`;
+        if (summaryInfo) summaryInfo.textContent = `${selesai} Selesai | ${belum} Belum Selesai`;
     }
 
     // ================ DROPDOWN MINGGU ================
-    weekButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        weekMenu.classList.toggle('hidden');
-        weekArrow.classList.toggle('rotate-180');
-    });
+    if (weekButton) {
+        weekButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            weekMenu.classList.toggle('hidden');
+            weekArrow.classList.toggle('rotate-180');
+        });
+    }
 
     weekOptions.forEach(option => {
         option.addEventListener('click', function(e) {
@@ -660,7 +649,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Reset filter hari ke SEMUA saat ganti minggu
             currentFilterDay = 'all';
             dayFilters.forEach(f => f.classList.remove('active'));
-            document.querySelector('.day-filter[data-day="all"]').classList.add('active');
+            
+            const allDayFilter = document.querySelector('.day-filter[data-day="all"]');
+            if (allDayFilter) {
+                allDayFilter.classList.add('active');
+            }
             
             // Close dropdown
             weekMenu.classList.add('hidden');
@@ -674,33 +667,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ================ DROPDOWN PROFIL ================
-    profileButton.addEventListener('click', function(e) {
-        e.stopPropagation();
-        profileMenu.classList.toggle('hidden');
-        profileArrow.classList.toggle('rotate-180');
-    });
+    if (profileButton) {
+        profileButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileMenu.classList.toggle('hidden');
+            if (profileArrow) profileArrow.classList.toggle('rotate-180');
+        });
+    }
 
     // ================ CLICK OUTSIDE ================
     document.addEventListener('click', function(e) {
-        if (!weekButton.contains(e.target) && !weekMenu.contains(e.target)) {
+        if (weekButton && !weekButton.contains(e.target) && weekMenu && !weekMenu.contains(e.target)) {
             weekMenu.classList.add('hidden');
-            weekArrow.classList.remove('rotate-180');
+            if (weekArrow) weekArrow.classList.remove('rotate-180');
         }
-        if (!profileButton.contains(e.target) && !profileMenu.contains(e.target)) {
+        if (profileButton && !profileButton.contains(e.target) && profileMenu && !profileMenu.contains(e.target)) {
             profileMenu.classList.add('hidden');
-            profileArrow.classList.remove('rotate-180');
+            if (profileArrow) profileArrow.classList.remove('rotate-180');
         }
     });
 
     // ================ SEARCH FILTER ================
-    searchInput.addEventListener('input', function(e) {
-        currentSearchTerm = e.target.value;
-        renderTable();
-        
-        if (currentSearchTerm.trim() !== '') {
-            showNotification(`Mencari: "${currentSearchTerm}"`);
-        }
-    });
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            currentSearchTerm = e.target.value;
+            renderTable();
+            
+            if (currentSearchTerm.trim() !== '') {
+                showNotification(`Mencari: "${currentSearchTerm}"`);
+            }
+        });
+    }
 
     // ================ DAY FILTER ================
     dayFilters.forEach(filter => {
@@ -765,7 +762,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ================ INITIAL RENDER ================
     // Set active day filter ke "SEMUA"
-    document.querySelector('.day-filter[data-day="all"]').classList.add('active');
+    const allDayFilter = document.querySelector('.day-filter[data-day="all"]');
+    if (allDayFilter) {
+        allDayFilter.classList.add('active');
+    }
     renderTable();
 });
 </script>
