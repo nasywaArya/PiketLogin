@@ -15,56 +15,48 @@ class ManageUserController extends Controller
      */
  
     public function index(Request $request)
-{
-    $query = User::query();
-
+    {
+        $query = User::query();
 
         // SEARCH
-        if ($request->search) {
-            $query->where('name', 'like', "%$request->search%")
-                  ->orWhere('email', 'like', "%$request->search%");
-        }
+        if ($request->filled('search')) {
+            $search = $request->search;
 
+            $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%");
+            });
+        }      
+        
+        // FILTER DIVISION
+         if ($request->filled('division_id')) {
+            $query->where('division_id', $request->division_id);
+        }   
+        
         // SORTING
         if ($request->sort == 'az') {
             $query->orderBy('name', 'asc');
         } elseif ($request->sort == 'za') {
             $query->orderBy('name', 'desc');
         } else {
-            $query->latest();
+            $query->orderBy('id', 'asc');
         }
 
         $users = $query->with('division')
                ->paginate(5)
                ->withQueryString();
         $divisions = Division::all();
+        $lastId = User::orderBy('id', 'desc')->value('id') ?? 0;
+        $nextId = \App\Models\User::count() + 1;
+
+        return view('admin.musers.index', compact('users', 'divisions', 'nextId'));
         return view('admin.musers.index', compact('users', 'divisions'));
  
 
     }
 
-    // FILTER DIVISION
-    if ($request->division_id) {
-        $query->where('division_id', $request->division_id);
-    }
+    
 
-    // SORTING
-    if ($request->sort == 'az') {
-        $query->orderBy('name', 'asc');
-    } elseif ($request->sort == 'za') {
-        $query->orderBy('name', 'desc');
-    } else {
-        $query->latest();
-    }
-
-    $users = $query->with('division')
-                   ->paginate(5)
-                   ->withQueryString();
-
-    $divisions = Division::all();
-
-    return view('admin.musers.index', compact('users', 'divisions'));
-}
 
     /**
      * Show the form for creating a new resource.
@@ -169,4 +161,5 @@ class ManageUserController extends Controller
         return redirect()->route('manageusers.index');
  
     }
+
 }
