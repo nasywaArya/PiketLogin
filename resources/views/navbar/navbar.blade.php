@@ -19,7 +19,7 @@ group
             <span>Manage Users</span>
         </a>
 
-        <a href="#"
+        <a href="{#}"
            class="flex items-center gap-2 px-4 py-2 rounded-[10px] hover:bg-[#F9BC60] text-[#004643] text-sm font-medium">
             <span class="material-symbols-outlined">
 manage_accounts
@@ -27,7 +27,7 @@ manage_accounts
             <span>Manage Division</span>
         </a>
 
-        <a href="#"
+        <a href=""
            class="flex items-center gap-2 px-4 py-2 rounded-[10px] hover:bg-[#F9BC60] text-[#004643] text-sm font-medium ">
             <span class="material-symbols-outlined">
 notifications
